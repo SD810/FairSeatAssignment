@@ -34,6 +34,8 @@ namespace FairSeatAssignment
 
         long tickClicked = -1L;             // 프로그램이 켜진 다음 흐른 시간 단위 ms
 
+        const string FSA_NAMES = "fsanames.txt"; // 이름 정보가 저장된 파일 이름
+        const string FSA_SEATS = "fsaseats.txt"; // 좌석정보가 저장된 파일 이름
         const int CUR_STEP_INIT_VAL = -1;   // 배정할 좌석번호가 0보다 작으면 초기화(미배정) 상태입니다.
         const string FSA_TAG = "FairSeatAssignment"; // FSA에서 관리하는 파일임을 나타내는 지시자 문자열
         const string FSA_FIRST_TAG = "---First---";  // 우선순위 이름표 지시자
@@ -113,18 +115,18 @@ namespace FairSeatAssignment
             //m_names = new List<string>(); // names 도 일반 listBox에 통합합니다. 필요없음
             try
             {
-                namesTxt = System.IO.File.ReadAllText("names.txt");
+                namesTxt = System.IO.File.ReadAllText(FSA_NAMES);
             }
             catch (System.IO.IOException)
             {
                 // 파일 읽기 실패
-                MessageBox.Show("입력 파일이 제공되지 않아 번호 모드로 동작합니다.\nnames.txt를 본 실행파일과 같은 폴더에 두면\n제공된 이름들로 진행할 수 있습니다.\n※한 줄에 이름 하나씩 넣어주세요.");
+                MessageBox.Show("입력 파일이 제공되지 않았습니다.\n이름을 추가/제거 하신 경우 이름 정보가 본 프로그램 종료시 "+ FSA_NAMES + "로 실행파일과 같은 폴더에 생성됩니다.");
 
-                // 번호모드로 동작
-                for (int i = 0; i < m_totalSeats.Length; i++)
-                {
-                    listName.Items.Add("" + (i + 1));
-                }
+                //// 번호모드로 동작
+                //for (int i = 0; i < m_totalSeats.Length; i++)
+                //{
+                //    listName.Items.Add("" + (i + 1));
+                //}
             }
 
             if (namesTxt != null)
@@ -200,12 +202,12 @@ namespace FairSeatAssignment
             string seatsTxt = null;
             try
             {
-                seatsTxt = System.IO.File.ReadAllText("seats.txt");
+                seatsTxt = System.IO.File.ReadAllText(FSA_SEATS);
             }
             catch (System.IO.IOException)
             {
                 // 파일 읽기 실패
-                MessageBox.Show("입력 파일이 제공되지 않아 좌석이 모두 선택되었습니다.\nseats.txt를 본 실행파일과 같은 폴더에 두면\n가용 좌석을 미리 체크할 수 있습니다.\n※ 1 체크하기 / 0 안하기");
+                MessageBox.Show("입력 파일이 제공되지 않아 좌석이 모두 선택되었습니다.\n체크를 건드리시면 본 프로그램 종료시 좌석정보가 "+ FSA_SEATS + "로 실행파일과 같은 폴더에 생성됩니다.");
             }
 
             if(seatsTxt != null)
@@ -275,6 +277,10 @@ namespace FairSeatAssignment
                 {
                     m_cachedTotalSeats--;
                 }
+
+                // 좌석 정보를 저장해야합니다.
+                m_seatsRead = true;
+
                 setLabelAvailability(m_cachedTotalSeats);
             }
         }
@@ -293,7 +299,7 @@ namespace FairSeatAssignment
                 // 좌석 수를 읽어올 수 있었던 경우 저장합니다.
                 try
                 {
-                    System.IO.File.WriteAllText("seats.txt", getCheckedSeats());
+                    System.IO.File.WriteAllText(FSA_SEATS, getCheckedSeats());
                 }
                 catch (System.IO.IOException)
                 {
@@ -309,7 +315,7 @@ namespace FairSeatAssignment
                 // 이름표를 읽어올 수 있었던 경우 저장합니다.
                 try
                 {
-                    System.IO.File.WriteAllText("names.txt", getAssignedNames());
+                    System.IO.File.WriteAllText(FSA_NAMES, getAssignedNames());
                 }
                 catch (System.IO.IOException)
                 {
@@ -903,6 +909,8 @@ namespace FairSeatAssignment
                 btnRemovePriority.Enabled = false;
                 btnAddLast.Enabled = false;
                 btnRemoveLast.Enabled = false;
+                btnInsertName.Enabled = false;
+                btnRemoveName.Enabled = false;
 
                 for (int seatNo = 0; seatNo < m_totalSeats.Length; seatNo++)
                 {
@@ -917,6 +925,8 @@ namespace FairSeatAssignment
                 btnRemovePriority.Enabled = true;
                 btnAddLast.Enabled = true;
                 btnRemoveLast.Enabled = true;
+                btnInsertName.Enabled = true;
+                btnRemoveName.Enabled = true;
 
                 for (int seatNo = 0; seatNo < m_totalSeats.Length; seatNo++)
                 {
@@ -1166,6 +1176,9 @@ namespace FairSeatAssignment
             }
 
             listName.Items.Add(nameToPut);
+
+            // 이름을 저장하도록 합니다.
+            m_namesRead = true;
 
             setLabelAvailability(m_cachedTotalSeats);
 
