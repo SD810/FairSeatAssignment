@@ -10,6 +10,8 @@ namespace FairSeatAssignment
 {
     public partial class MainForm : Form
     {
+        const string VERSION_NAME = "rev09";
+
         TRandom m_rng;                      // 난수 생성기
         CheckBox[] m_totalSeats;            // 전체 좌석
         List<CheckBox> m_seats;             // 유효 좌석
@@ -51,6 +53,9 @@ namespace FairSeatAssignment
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            //버전 정보 폼에 삽입
+            lblVersion.Text = VERSION_NAME;
+
             // Random 객체 초기화
             m_rng = new TRandom();
 
@@ -1304,6 +1309,12 @@ namespace FairSeatAssignment
                 isUserChange = true;
                 // 이벤트 처리 끝
             }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            //홈페이지 열기
+            System.Diagnostics.Process.Start(lnklblProject.Text);
         }
     }
 }

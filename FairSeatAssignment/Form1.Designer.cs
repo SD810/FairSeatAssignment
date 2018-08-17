@@ -98,6 +98,8 @@
             this.btnInsertName = new System.Windows.Forms.Button();
             this.btnRemoveName = new System.Windows.Forms.Button();
             this.txtName = new System.Windows.Forms.TextBox();
+            this.lblVersion = new System.Windows.Forms.Label();
+            this.lnklblProject = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -789,7 +791,7 @@
             // 
             this.listPriority.FormattingEnabled = true;
             this.listPriority.ItemHeight = 25;
-            this.listPriority.Location = new System.Drawing.Point(161, 522);
+            this.listPriority.Location = new System.Drawing.Point(295, 522);
             this.listPriority.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listPriority.Name = "listPriority";
             this.listPriority.Size = new System.Drawing.Size(158, 179);
@@ -798,7 +800,7 @@
             // 
             // btnRemovePriority
             // 
-            this.btnRemovePriority.Location = new System.Drawing.Point(354, 632);
+            this.btnRemovePriority.Location = new System.Drawing.Point(488, 632);
             this.btnRemovePriority.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRemovePriority.Name = "btnRemovePriority";
             this.btnRemovePriority.Size = new System.Drawing.Size(68, 69);
@@ -809,7 +811,7 @@
             // 
             // btnAddPriority
             // 
-            this.btnAddPriority.Location = new System.Drawing.Point(354, 559);
+            this.btnAddPriority.Location = new System.Drawing.Point(488, 559);
             this.btnAddPriority.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAddPriority.Name = "btnAddPriority";
             this.btnAddPriority.Size = new System.Drawing.Size(68, 69);
@@ -824,7 +826,7 @@
             this.ckbConsolidate.Checked = true;
             this.ckbConsolidate.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbConsolidate.Enabled = false;
-            this.ckbConsolidate.Location = new System.Drawing.Point(354, 16);
+            this.ckbConsolidate.Location = new System.Drawing.Point(34, 580);
             this.ckbConsolidate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbConsolidate.Name = "ckbConsolidate";
             this.ckbConsolidate.Size = new System.Drawing.Size(162, 29);
@@ -863,7 +865,7 @@
             // 
             this.listLast.FormattingEnabled = true;
             this.listLast.ItemHeight = 25;
-            this.listLast.Location = new System.Drawing.Point(963, 522);
+            this.listLast.Location = new System.Drawing.Point(1097, 522);
             this.listLast.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listLast.Name = "listLast";
             this.listLast.Size = new System.Drawing.Size(162, 179);
@@ -872,7 +874,7 @@
             // 
             // btnAddLast
             // 
-            this.btnAddLast.Location = new System.Drawing.Point(869, 559);
+            this.btnAddLast.Location = new System.Drawing.Point(1003, 559);
             this.btnAddLast.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAddLast.Name = "btnAddLast";
             this.btnAddLast.Size = new System.Drawing.Size(72, 69);
@@ -883,7 +885,7 @@
             // 
             // btnRemoveLast
             // 
-            this.btnRemoveLast.Location = new System.Drawing.Point(869, 632);
+            this.btnRemoveLast.Location = new System.Drawing.Point(1003, 632);
             this.btnRemoveLast.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRemoveLast.Name = "btnRemoveLast";
             this.btnRemoveLast.Size = new System.Drawing.Size(72, 69);
@@ -895,7 +897,7 @@
             // lblAvailability
             // 
             this.lblAvailability.AutoSize = true;
-            this.lblAvailability.Location = new System.Drawing.Point(12, 17);
+            this.lblAvailability.Location = new System.Drawing.Point(29, 632);
             this.lblAvailability.Name = "lblAvailability";
             this.lblAvailability.Size = new System.Drawing.Size(140, 50);
             this.lblAvailability.TabIndex = 13;
@@ -905,7 +907,7 @@
             // 
             this.listName.FormattingEnabled = true;
             this.listName.ItemHeight = 25;
-            this.listName.Location = new System.Drawing.Point(461, 572);
+            this.listName.Location = new System.Drawing.Point(595, 572);
             this.listName.Name = "listName";
             this.listName.Size = new System.Drawing.Size(372, 129);
             this.listName.TabIndex = 14;
@@ -918,7 +920,7 @@
             // 
             // btnInsertName
             // 
-            this.btnInsertName.Location = new System.Drawing.Point(787, 522);
+            this.btnInsertName.Location = new System.Drawing.Point(921, 522);
             this.btnInsertName.Name = "btnInsertName";
             this.btnInsertName.Size = new System.Drawing.Size(46, 44);
             this.btnInsertName.TabIndex = 15;
@@ -928,7 +930,7 @@
             // 
             // btnRemoveName
             // 
-            this.btnRemoveName.Location = new System.Drawing.Point(461, 522);
+            this.btnRemoveName.Location = new System.Drawing.Point(595, 522);
             this.btnRemoveName.Name = "btnRemoveName";
             this.btnRemoveName.Size = new System.Drawing.Size(46, 44);
             this.btnRemoveName.TabIndex = 16;
@@ -938,16 +940,38 @@
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(513, 522);
+            this.txtName.Location = new System.Drawing.Point(647, 522);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(268, 31);
             this.txtName.TabIndex = 17;
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Location = new System.Drawing.Point(12, 15);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(105, 25);
+            this.lblVersion.TabIndex = 18;
+            this.lblVersion.Text = "VERSION";
+            // 
+            // lnklblProject
+            // 
+            this.lnklblProject.AutoSize = true;
+            this.lnklblProject.Location = new System.Drawing.Point(12, 50);
+            this.lnklblProject.Name = "lnklblProject";
+            this.lnklblProject.Size = new System.Drawing.Size(452, 25);
+            this.lnklblProject.TabIndex = 19;
+            this.lnklblProject.TabStop = true;
+            this.lnklblProject.Text = "https://github.com/SD810/FairSeatAssignment";
+            this.lnklblProject.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1292, 720);
+            this.Controls.Add(this.lnklblProject);
+            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.btnRemoveName);
             this.Controls.Add(this.btnInsertName);
@@ -1054,6 +1078,8 @@
         private System.Windows.Forms.Button btnInsertName;
         private System.Windows.Forms.Button btnRemoveName;
         private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.LinkLabel lnklblProject;
     }
 }
 
