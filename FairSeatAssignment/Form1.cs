@@ -15,7 +15,7 @@ namespace FairSeatAssignment
         List<CheckBox> m_seats;             // 유효 좌석
         //List<string> m_names;               // 전체 이름표
         string[] m_assigned;                // 좌석별 배정받은 이름표
-        int m_totalNames;                   // 전체 이름 수
+        //int m_totalNames;                   // 전체 이름 수
         int m_cachedTotalSeats;             // 캐시된 유효 좌석 수
 
         bool m_seatsRead = false;           // 좌석 정보를 읽어온 경우
@@ -39,6 +39,8 @@ namespace FairSeatAssignment
         const string FSA_FIRST_TAG = "---First---";  // 우선순위 이름표 지시자
         const string FSA_NAMES_TAG = "---Names---";  // 일반 이름표 지시자
         const string FSA_LAST_TAG = "---Last----";   // 후순위 이름표 지시자
+
+        bool isUserChange = true; // SelectedIndexChanged 리스너에서 목록 선택 이벤트를 처리해야할지 말지를 결정
 
         public MainForm()
         {
@@ -192,7 +194,7 @@ namespace FairSeatAssignment
 
 
             // 전체 이름 수;
-            m_totalNames = listPriority.Items.Count + listName.Items.Count + listLast.Items.Count;
+            //m_totalNames = listPriority.Items.Count + listName.Items.Count + listLast.Items.Count;
 
 
             string seatsTxt = null;
@@ -253,9 +255,9 @@ namespace FairSeatAssignment
             }
 
             // 입력 이름 수가 최대 좌석 수보다 큰 경우 경고 표시
-            if (m_totalNames > m_seats.Count)
+            if (getTotalNames() > m_seats.Count)
             {
-                MessageBox.Show("입력 이름 수(" + m_totalNames + ")가 가용 좌석 수(" + m_seats.Count + ")보다 많습니다.\n일부는 자리를 배정받지 못할 것입니다.");
+                MessageBox.Show("입력 이름 수(" + getTotalNames() + ")가 가용 좌석 수(" + m_seats.Count + ")보다 많습니다.\n일부는 자리를 배정받지 못할 것입니다.");
             }
         }
 
@@ -348,6 +350,11 @@ namespace FairSeatAssignment
             return sbNames.ToString();
         }
 
+        private int getTotalNames()
+        {
+            return listName.Items.Count + listPriority.Items.Count + listLast.Items.Count;
+        }
+
         private void setLabelAvailability(int availableSeats)
         {
             // 좌석 수 불일치시 캐시하기
@@ -356,8 +363,8 @@ namespace FairSeatAssignment
                 m_cachedTotalSeats = availableSeats;
             }
 
-            lblAvailability.Text = "가용 좌석 수: " + availableSeats + "\n입력 이름 수: " + m_totalNames;
-            if(availableSeats < m_totalNames)
+            lblAvailability.Text = "가용 좌석 수: " + availableSeats + "\n입력 이름 수: " + getTotalNames();
+            if(availableSeats < getTotalNames())
             {
                 // 가용 좌석 수가 전체 이름 수보다 모자라면 빨강색으로 강조
                 lblAvailability.ForeColor = Color.Red;
@@ -659,6 +666,10 @@ namespace FairSeatAssignment
                 listTarget.Items.Add(listName.Items[selIndex]);
                 listName.Items.RemoveAt(selIndex);
 
+
+                // 목록 선택 이벤트 무시 시작
+                isUserChange = false;
+
                 // 이전 항목을 선택
                 if (listName.Items.Count > selIndex)
                 {
@@ -671,6 +682,9 @@ namespace FairSeatAssignment
                     // 왜냐면 하나씩밖에 추가제거를 안 하니까.
                     listName.SelectedIndex = --selIndex;
                 }
+
+                isUserChange = true;
+                // 목록 선택 이벤트 무시 끝
             }
         }
 
@@ -687,6 +701,9 @@ namespace FairSeatAssignment
                 // 해당 항목을 해당 리스트박스에서 제외합니다.
                 listTarget.Items.RemoveAt(selIndex);
 
+                // 목록 선택 이벤트 무시 시작
+                isUserChange = false;
+
                 // 이전 항목을 선택
                 if (listTarget.Items.Count > selIndex)
                 {
@@ -699,6 +716,9 @@ namespace FairSeatAssignment
                     // 왜냐면 하나씩밖에 추가제거를 안 하니까.
                     listTarget.SelectedIndex = --selIndex;
                 }
+
+                isUserChange = true;
+                // 목록 선택 이벤트 무시 끝
             }
         }
 
@@ -1131,6 +1151,146 @@ namespace FairSeatAssignment
             //버튼도 활성화.
             btnAssignStepbyStep.Enabled = true;
 
+        }
+
+        private void btnInsertName_Click(object sender, EventArgs e)
+        {
+            // 이름 추가 버튼을 누르면
+            // 앞뒤 빈칸과 중복을 확인해 목록에 삽입하고 입력칸을 비웁니다.
+
+            string nameToPut = txtName.Text.Trim();
+            if (nameToPut.Length <= 0)
+            {
+                // 이름이 앞뒤 빈칸 빼니 없군요. 진행불가.
+                return;
+            }
+
+            listName.Items.Add(nameToPut);
+
+            setLabelAvailability(m_cachedTotalSeats);
+
+            txtName.Text = "";
+        }
+
+        private void btnRemoveName_Click(object sender, EventArgs e)
+        {
+            // 이름 제거 버튼을 누르면
+            // 목록에서 선택된 이름을 입력칸으로 옮기고 목록에서 삭제합니다.
+
+            //목록이 3개 있으므로 이 선택을 다 구분해야한다.
+            ListBox selectedList = null;
+
+            if (listPriority.SelectedIndex >= 0)
+            {
+                selectedList = listPriority;
+            }
+
+            if (listLast.SelectedIndex >= 0)
+            {
+                selectedList = listLast;
+            }
+
+            if(listName.SelectedIndex >= 0)
+            {
+                selectedList = listName;
+            }
+
+            if (selectedList != null)
+            {
+                // 선택된 목록이 있는 경우
+                txtName.Text = removeNameFromList(selectedList);
+            }
+        }
+
+        private string removeNameFromList(ListBox listTarget)
+        {
+            //이름을 추출한 다음 목록에서 삭제
+
+            string nameFromList = "";
+            int selIndex = listTarget.SelectedIndex;
+            if (selIndex >= 0)
+            {
+                // 선택된 항목이 있는 경우
+
+                //해당 항목을 목록에서 가져옵니다.
+                nameFromList = (string)listTarget.Items[selIndex];
+
+                // 해당 항목을 해당 리스트박스에서 제외합니다.
+                listTarget.Items.RemoveAt(selIndex);
+
+
+                // 목록 선택 이벤트 무시 시작
+                isUserChange = false;
+
+
+                // 이전 항목을 선택
+                if (listTarget.Items.Count > selIndex)
+                {
+                    //선택된 항목 번호가 범위를 초과하지 않는 경우
+                    listTarget.SelectedIndex = selIndex;
+                }
+                else
+                {
+                    // 범위가 초과하면 범위 초과 예외가 발생하므로 하나 줄여본다.
+                    // 왜냐면 하나씩밖에 추가제거를 안 하니까.
+                    listTarget.SelectedIndex = --selIndex;
+                }
+
+
+                isUserChange = true;
+                // 목록 선택 이벤트 무시 끝
+            }
+
+            setLabelAvailability(m_cachedTotalSeats);
+
+            return nameFromList;
+        }
+
+
+        
+        
+        private void deselectAllList()
+        {
+            // 모든 목록의 선택을 해제하기
+            listPriority.SelectedIndex = -1;
+            listLast.SelectedIndex = -1;
+            listName.SelectedIndex = -1;
+        }
+
+        private void listName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setFocus(listName);
+        }
+
+        private void listPriority_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setFocus(listPriority);
+        }
+
+        private void listLast_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setFocus(listLast);
+        }
+
+        private void setFocus(ListBox listTarget)
+        {
+
+            if (isUserChange)
+            {
+                int selectedIndexBackup = listTarget.SelectedIndex;
+                // 목록 선택 이벤트 무시 시작
+
+                isUserChange = false;
+
+                //모든 목록을 선택 해제
+                deselectAllList();
+
+                //다시 선택 복구
+                listTarget.SelectedIndex = selectedIndexBackup;
+
+                isUserChange = true;
+                // 이벤트 처리 끝
+            }
         }
     }
 }

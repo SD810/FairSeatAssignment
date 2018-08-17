@@ -95,6 +95,9 @@
             this.lblAvailability = new System.Windows.Forms.Label();
             this.listName = new System.Windows.Forms.ListBox();
             this.timerPreventDblClk = new System.Windows.Forms.Timer(this.components);
+            this.btnInsertName = new System.Windows.Forms.Button();
+            this.btnRemoveName = new System.Windows.Forms.Button();
+            this.txtName = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -786,18 +789,19 @@
             // 
             this.listPriority.FormattingEnabled = true;
             this.listPriority.ItemHeight = 25;
-            this.listPriority.Location = new System.Drawing.Point(220, 522);
+            this.listPriority.Location = new System.Drawing.Point(161, 522);
             this.listPriority.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listPriority.Name = "listPriority";
-            this.listPriority.Size = new System.Drawing.Size(162, 179);
+            this.listPriority.Size = new System.Drawing.Size(158, 179);
             this.listPriority.TabIndex = 3;
+            this.listPriority.SelectedIndexChanged += new System.EventHandler(this.listPriority_SelectedIndexChanged);
             // 
             // btnRemovePriority
             // 
-            this.btnRemovePriority.Location = new System.Drawing.Point(413, 632);
+            this.btnRemovePriority.Location = new System.Drawing.Point(354, 632);
             this.btnRemovePriority.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRemovePriority.Name = "btnRemovePriority";
-            this.btnRemovePriority.Size = new System.Drawing.Size(72, 69);
+            this.btnRemovePriority.Size = new System.Drawing.Size(68, 69);
             this.btnRemovePriority.TabIndex = 4;
             this.btnRemovePriority.Text = ">>";
             this.btnRemovePriority.UseVisualStyleBackColor = true;
@@ -805,10 +809,10 @@
             // 
             // btnAddPriority
             // 
-            this.btnAddPriority.Location = new System.Drawing.Point(413, 522);
+            this.btnAddPriority.Location = new System.Drawing.Point(354, 559);
             this.btnAddPriority.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAddPriority.Name = "btnAddPriority";
-            this.btnAddPriority.Size = new System.Drawing.Size(72, 69);
+            this.btnAddPriority.Size = new System.Drawing.Size(68, 69);
             this.btnAddPriority.TabIndex = 4;
             this.btnAddPriority.Text = "<<";
             this.btnAddPriority.UseVisualStyleBackColor = true;
@@ -859,15 +863,16 @@
             // 
             this.listLast.FormattingEnabled = true;
             this.listLast.ItemHeight = 25;
-            this.listLast.Location = new System.Drawing.Point(877, 522);
+            this.listLast.Location = new System.Drawing.Point(963, 522);
             this.listLast.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listLast.Name = "listLast";
             this.listLast.Size = new System.Drawing.Size(162, 179);
             this.listLast.TabIndex = 10;
+            this.listLast.SelectedIndexChanged += new System.EventHandler(this.listLast_SelectedIndexChanged);
             // 
             // btnAddLast
             // 
-            this.btnAddLast.Location = new System.Drawing.Point(783, 522);
+            this.btnAddLast.Location = new System.Drawing.Point(869, 559);
             this.btnAddLast.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAddLast.Name = "btnAddLast";
             this.btnAddLast.Size = new System.Drawing.Size(72, 69);
@@ -878,7 +883,7 @@
             // 
             // btnRemoveLast
             // 
-            this.btnRemoveLast.Location = new System.Drawing.Point(783, 632);
+            this.btnRemoveLast.Location = new System.Drawing.Point(869, 632);
             this.btnRemoveLast.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRemoveLast.Name = "btnRemoveLast";
             this.btnRemoveLast.Size = new System.Drawing.Size(72, 69);
@@ -900,21 +905,52 @@
             // 
             this.listName.FormattingEnabled = true;
             this.listName.ItemHeight = 25;
-            this.listName.Location = new System.Drawing.Point(517, 522);
+            this.listName.Location = new System.Drawing.Point(461, 572);
             this.listName.Name = "listName";
-            this.listName.Size = new System.Drawing.Size(238, 179);
+            this.listName.Size = new System.Drawing.Size(372, 129);
             this.listName.TabIndex = 14;
+            this.listName.SelectedIndexChanged += new System.EventHandler(this.listName_SelectedIndexChanged);
             // 
             // timerPreventDblClk
             // 
             this.timerPreventDblClk.Interval = 1000;
             this.timerPreventDblClk.Tick += new System.EventHandler(this.timerPreventDblClk_Tick);
             // 
+            // btnInsertName
+            // 
+            this.btnInsertName.Location = new System.Drawing.Point(787, 522);
+            this.btnInsertName.Name = "btnInsertName";
+            this.btnInsertName.Size = new System.Drawing.Size(46, 44);
+            this.btnInsertName.TabIndex = 15;
+            this.btnInsertName.Text = "v";
+            this.btnInsertName.UseVisualStyleBackColor = true;
+            this.btnInsertName.Click += new System.EventHandler(this.btnInsertName_Click);
+            // 
+            // btnRemoveName
+            // 
+            this.btnRemoveName.Location = new System.Drawing.Point(461, 522);
+            this.btnRemoveName.Name = "btnRemoveName";
+            this.btnRemoveName.Size = new System.Drawing.Size(46, 44);
+            this.btnRemoveName.TabIndex = 16;
+            this.btnRemoveName.Text = "^";
+            this.btnRemoveName.UseVisualStyleBackColor = true;
+            this.btnRemoveName.Click += new System.EventHandler(this.btnRemoveName_Click);
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(513, 522);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(268, 31);
+            this.txtName.TabIndex = 17;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1292, 720);
+            this.Controls.Add(this.txtName);
+            this.Controls.Add(this.btnRemoveName);
+            this.Controls.Add(this.btnInsertName);
             this.Controls.Add(this.listName);
             this.Controls.Add(this.lblAvailability);
             this.Controls.Add(this.btnAddLast);
@@ -1015,6 +1051,9 @@
         private System.Windows.Forms.Label lblAvailability;
         private System.Windows.Forms.ListBox listName;
         private System.Windows.Forms.Timer timerPreventDblClk;
+        private System.Windows.Forms.Button btnInsertName;
+        private System.Windows.Forms.Button btnRemoveName;
+        private System.Windows.Forms.TextBox txtName;
     }
 }
 
